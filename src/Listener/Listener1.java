@@ -1,6 +1,4 @@
-package Listener; /**
- * Created by fc751 on 2017/3/16.
- */
+package Listener;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -39,9 +37,6 @@ public class Listener1 implements ServletContextListener,
         System.out.println("网站初始化");
         //初始化网站的一些参数
         se.getSession().setAttribute("access",0);
-        se.getSession().setAttribute("car",0);
-        se.getSession().setAttribute("computer",0);
-        se.getSession().setAttribute("cellphone",0);
     }
 
     public void sessionDestroyed(HttpSessionEvent se) {

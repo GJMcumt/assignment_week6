@@ -10,8 +10,8 @@ public class cartService {
     public void setCartDao(){
         this.cartDao = new cartDaoimpl();
     }
-    public List<Cart> getAll(){
-        return cartDao.getAll();
+    public List<Cart> getAll(Cart cart){
+        return cartDao.getAll(cart);
     }
     public boolean addCart(Cart cart){
         return cartDao.addCart(cart);

@@ -29,7 +29,7 @@ public class index extends HttpServlet {
         if(!(session.getAttribute("access").equals(0))){
             status="Log Out";
         }else{
-            status="Log in";
+            status="Log IN";
         }
         session.setAttribute("status",status);
         session.setAttribute("count","start");

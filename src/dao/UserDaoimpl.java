@@ -8,9 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by fc751 on 2017/3/24.
- */
 public class UserDaoimpl implements UserDao {
     @Override
     public List<User> getAll() {
@@ -50,9 +47,9 @@ public class UserDaoimpl implements UserDao {
         try{
             ResultSet rs= DbUtil.executeQuery("select * from user where user_name=?", new Object[]{user.getUser_name()});
             while(rs.next()){
-                user.setUser_id(rs.getInt(1));
+                user.setUser_id(rs.getInt("user_id"));
                 //user.setUser_name (rs.getString(2));
-                user.setPwd(rs.getString(3));
+                user.setPwd(rs.getString("pwd"));
             }
         }catch(SQLException e){
             e.printStackTrace();

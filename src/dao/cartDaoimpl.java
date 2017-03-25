@@ -11,17 +11,17 @@ public class cartDaoimpl implements CartDao {
 
 
     @Override
-    public List<Cart> getAll() {
+    public List<Cart> getAll(Cart cart) {
         List<Cart> newsList=new ArrayList<>();
         try{
-            ResultSet rs= DbUtil.executeQuery("select good_name,shopping_num,cart.suk,cart.user_id from cart,user,good where user.user_id=1 AND cart.suk=good.suk AND cart.user_id=user.user_id", new Object[]{});
+            ResultSet rs= DbUtil.executeQuery("select good_name,shopping_num,cart.suk,cart.user_id from cart,user,good where user.user_id=? AND cart.suk=good.suk AND cart.user_id=user.user_id AND cart.user_id=?", new Object[]{cart.getUser_id(),cart.getUser_id()});
             while(rs.next()){
-                Cart cart=new Cart();
-                cart.setGood_name(rs.getString(1));
-                cart.setShopping_num(rs.getInt(2));
-                cart.setSuk(rs.getInt(3));
-                cart.setUser_id(rs.getInt(4));
-                newsList.add(cart);
+                Cart list_cart=new Cart();
+                list_cart.setGood_name(rs.getString(1));
+                list_cart.setShopping_num(rs.getInt(2));
+                list_cart.setSuk(rs.getInt(3));
+                list_cart.setUser_id(rs.getInt(4));
+                newsList.add(list_cart);
             }
         }catch(SQLException e){
             e.printStackTrace();

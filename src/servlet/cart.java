@@ -19,13 +19,15 @@ import java.util.List;
 public class cart extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session =request.getSession();
-        if (session.getAttribute("access").toString().equals("false")){
+        if (session.getAttribute("access").toString().equals("0")){
             response.sendRedirect("login");
         }
         else {
             cartService se=new cartService();
             se.setCartDao();
-            session.setAttribute("cart",se.getAll());//读取数据库中购物车数量
+            Cart getCart=new Cart();
+            getCart.setUser_id((Integer) session.getAttribute("access"));
+            session.setAttribute("cart",se.getAll(getCart));//读取数据库中购物车数量
             //更新购物车
             Cart newCart=new Cart();
             Cart oldCart=new Cart();
@@ -47,12 +49,13 @@ public class cart extends HttpServlet {
                 boolean i=true;
                 Cart addCart = new Cart();
                 addCart.setSuk(goodList.getSuk());
-                for(Cart cartList:cart_list) {
-                    if (cartList.getSuk()==goodList.getSuk() || request.getParameter(String.valueOf(addCart.getSuk())).equals("0") || request.getParameter(String.valueOf(addCart.getSuk())).equals("")) {
-                        i=false;
+                    for (Cart cartList : cart_list) {
+                        if (cartList.getSuk() == goodList.getSuk() || request.getParameter(String.valueOf(addCart.getSuk())).equals("0") ) {
+                            i = false;
+                        }
                     }
-                }
-                if (i){
+
+                if (i && !(request.getParameter(String.valueOf(addCart.getSuk())).equals(""))){
                     addCart.setUser_id((Integer) session.getAttribute("access"));
                     addCart.setShopping_num(Integer.parseInt(request.getParameter(String.valueOf(addCart.getSuk()))));
                     se.addCart(addCart);
@@ -60,7 +63,7 @@ public class cart extends HttpServlet {
 
             }
 
-            session.setAttribute("cart",se.getAll());//二次读取数据库中购物车数量
+            session.setAttribute("cart",se.getAll(getCart));//二次读取数据库中购物车数量
             RequestDispatcher rd = request.getRequestDispatcher("cart.jsp");
             rd.forward(request, response);
         }
