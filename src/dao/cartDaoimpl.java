@@ -38,16 +38,16 @@ public class cartDaoimpl implements CartDao {
 
     @Override
     public boolean updateCart(Cart oldCart,Cart newCart) {
-        return DbUtil.executeUpdate("update cart set user_id=?,shopping_num=? where suk=?",new Object[]{newCart.getUser_id(),newCart.getShopping_num(),oldCart.getSuk()});
+        return DbUtil.executeUpdate("update cart set shopping_num=? where user_id=? AND suk=?",new Object[]{newCart.getShopping_num(),oldCart.getUser_id(),oldCart.getSuk()});
     }
 
     @Override
     public Cart getBySuk(Cart cart) {
         try{
-            ResultSet rs= DbUtil.executeQuery("select * from cart where suk=?", new Object[]{cart.getSuk()});
+            ResultSet rs= DbUtil.executeQuery("select * from cart where suk=? AND user_id=?", new Object[]{cart.getSuk(),cart.getUser_id()});
             while(rs.next()){
                 cart.setSuk(rs.getInt(1));
-                cart.setUser_id (rs.getInt(2));
+                //cart.setUser_id (rs.getInt(2));
                 cart.setShopping_num(rs.getInt(3));
             }
         }catch(SQLException e){

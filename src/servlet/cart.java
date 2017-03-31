@@ -37,7 +37,7 @@ public class cart extends HttpServlet {
             good_list=(List<Good>) session.getAttribute("good");
             for(Cart newList:cart_list){
                 oldCart.setSuk(newList.getSuk());
-                newCart.setUser_id((Integer) session.getAttribute("access"));
+                oldCart.setUser_id((Integer) session.getAttribute("access"));
                 if (!(request.getParameter(String.valueOf(oldCart.getSuk())).equals(""))) {
                     newCart.setShopping_num(se.getBySuk(oldCart).getShopping_num() + Integer.parseInt(request.getParameter(String.valueOf(oldCart.getSuk()))));
                     se.updateCart(oldCart, newCart);
