@@ -44,7 +44,7 @@ public class cartDaoimpl implements CartDao {
     @Override
     public Cart getBySuk(Cart cart) {
         try{
-            ResultSet rs= DbUtil.executeQuery("select * from cart where suk=? AND user_id=?", new Object[]{cart.getSuk(),cart.getUser_id()});
+            ResultSet rs= DbUtil.executeQuery("select * from cart where suk=? AND  user_id=?", new Object[]{cart.getSuk(),cart.getUser_id()});
             while(rs.next()){
                 cart.setSuk(rs.getInt(1));
                 //cart.setUser_id (rs.getInt(2));
@@ -58,6 +58,6 @@ public class cartDaoimpl implements CartDao {
 
     @Override
     public boolean deleteCart(Cart cart) {
-        return DbUtil.executeUpdate("delete from cart where suk=?", new Object[]{cart.getSuk()});
+        return DbUtil.executeUpdate("delete from cart where suk=? And user_id=?", new Object[]{cart.getSuk(),cart.getUser_id()});
     }
 }

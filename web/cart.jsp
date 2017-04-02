@@ -22,6 +22,12 @@
                 <tr>
                     <td>${good.good_name}</td>
                     <td>${good.shopping_num}</td>
+                    <td>
+                        <form action="/del" method="post">
+                            <input type="hidden" name="suk" value="${good.suk}">
+                            <button type="submit" class="btn btn-primary">删除</button>
+                        </form>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

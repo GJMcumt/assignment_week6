@@ -19,7 +19,7 @@ public class cartService {
     public boolean updateCart(Cart oldCart,Cart newCart){
         return cartDao.updateCart(oldCart, newCart);
     }
-    public boolean deleteCar(Cart cart){
+    public boolean deleteCart(Cart cart){
         return cartDao.deleteCart(cart);
     }
     public Cart getBySuk(Cart cart){

@@ -47,6 +47,16 @@
         <servlet-name>cart</servlet-name>
         <url-pattern>/cart</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>del</servlet-name>
+        <servlet-class>
+            servlet.del
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>del</servlet-name>
+        <url-pattern>/del</url-pattern>
+    </servlet-mapping>
     <!--<jsp-config>-->
         <!--<jsp-property-group>-->
             <!--<url-pattern>/*.jsp</url-pattern>-->
