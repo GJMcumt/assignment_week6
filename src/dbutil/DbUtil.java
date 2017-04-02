@@ -62,12 +62,9 @@ public class DbUtil {
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
-//		try {
-//			conn.close();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
+
 		return rs;
+
 
 
 
