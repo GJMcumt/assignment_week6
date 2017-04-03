@@ -29,11 +29,10 @@ public class DbUtil {
 		return connection;
 	}
 	public static boolean executeUpdate(String sql,Object[] args){
-		Connection conn=null;
-		PreparedStatement pst=null;
+        Connection conn=getConnection();
+		PreparedStatement pst;
 		int rowsCount=0;
 		try{
-			conn=dataSource.getConnection();
 			pst=conn.prepareStatement(sql);
 			if(args!=null&args.length>0){
 				for(int i=0;i<args.length;i++){
@@ -44,14 +43,17 @@ public class DbUtil {
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
-		return rowsCount>0;
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowsCount>0;
 	}
-	public static ResultSet executeQuery(String sql,Object[] args){
-		Connection conn=null;
+	public static ResultSet executeQuery(String sql,Object[] args,Connection conn){
 		PreparedStatement pst=null;
 		ResultSet rs=null;
 		try{
-			conn=dataSource.getConnection();
 			pst=conn.prepareStatement(sql);
 			if(args!=null&args.length>0){
 				for(int i=0;i<args.length;i++){

@@ -2,6 +2,8 @@ package dao;
 
 import dbutil.DbUtil;
 import entity.Cart;
+
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,7 +16,8 @@ public class cartDaoimpl implements CartDao {
     public List<Cart> getAll(Cart cart) {
         List<Cart> newsList=new ArrayList<>();
         try{
-            ResultSet rs= DbUtil.executeQuery("select good_name,shopping_num,cart.suk,cart.user_id from cart,user,good where user.user_id=? AND cart.suk=good.suk AND cart.user_id=user.user_id AND cart.user_id=?", new Object[]{cart.getUser_id(),cart.getUser_id()});
+            Connection conn=DbUtil.getConnection();
+            ResultSet rs= DbUtil.executeQuery("select good_name,shopping_num,cart.suk,cart.user_id from cart,user,good where user.user_id=? AND cart.suk=good.suk AND cart.user_id=user.user_id AND cart.user_id=?", new Object[]{cart.getUser_id(),cart.getUser_id()},conn);
             while(rs.next()){
                 Cart list_cart=new Cart();
                 list_cart.setGood_name(rs.getString(1));
@@ -23,6 +26,7 @@ public class cartDaoimpl implements CartDao {
                 list_cart.setUser_id(rs.getInt(4));
                 newsList.add(list_cart);
             }
+            conn.close();
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -44,12 +48,14 @@ public class cartDaoimpl implements CartDao {
     @Override
     public Cart getBySuk(Cart cart) {
         try{
-            ResultSet rs= DbUtil.executeQuery("select * from cart where suk=? AND  user_id=?", new Object[]{cart.getSuk(),cart.getUser_id()});
+            Connection conn=DbUtil.getConnection();
+            ResultSet rs= DbUtil.executeQuery("select * from cart where suk=? AND  user_id=?", new Object[]{cart.getSuk(),cart.getUser_id()},conn);
             while(rs.next()){
                 cart.setSuk(rs.getInt(1));
                 //cart.setUser_id (rs.getInt(2));
                 cart.setShopping_num(rs.getInt(3));
             }
+            conn.close();
         }catch(SQLException e){
             e.printStackTrace();
         }

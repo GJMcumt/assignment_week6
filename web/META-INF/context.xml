@@ -7,7 +7,7 @@
     password="123456"                                                     
     factory="org.apache.naming.factory.BeanFactory"
     type="com.mchange.v2.c3p0.ComboPooledDataSource"
-    maxPoolSize="200"
+    maxPoolSize="20"
     minPoolSize="15"
     acquireIncrement="5"
     acquireRetryAttempts = "1"

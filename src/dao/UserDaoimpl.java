@@ -3,6 +3,7 @@ package dao;
 import dbutil.DbUtil;
 import entity.User;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,7 +14,8 @@ public class UserDaoimpl implements UserDao {
     public List<User> getAll() {
         List<User> newsList=new ArrayList<>();
         try{
-            ResultSet rs= DbUtil.executeQuery("select * from user ", new Object[]{});
+            Connection conn=DbUtil.getConnection();
+            ResultSet rs= DbUtil.executeQuery("select * from user ", new Object[]{},conn);
             while(rs.next()){
                 User user=new User();
                 user.setUser_id(rs.getInt(1));
@@ -21,6 +23,7 @@ public class UserDaoimpl implements UserDao {
                 user.setPwd(rs.getString(3));
                 newsList.add(user);
             }
+            conn.close();
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -45,15 +48,18 @@ public class UserDaoimpl implements UserDao {
     @Override
     public User getByUser_Name(User user) {
         try{
-            ResultSet rs= DbUtil.executeQuery("select * from user where user_name=?", new Object[]{user.getUser_name()});
+            Connection conn=DbUtil.getConnection();
+            ResultSet rs= DbUtil.executeQuery("select * from user where user_name=?", new Object[]{user.getUser_name()},conn);
             while(rs.next()){
                 user.setUser_id(rs.getInt("user_id"));
                 //user.setUser_name (rs.getString(2));
                 user.setPwd(rs.getString("pwd"));
             }
+            conn.close();
         }catch(SQLException e){
             e.printStackTrace();
         }
+
         return user;
     }
 }
